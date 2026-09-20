@@ -2,68 +2,167 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DailyBite Prototype</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>DailyBite Premium</title>
     <style>
         :root {
             --primary: #FF5A5F;
-            --bg: #F7F7F7;
+            --secondary: #FFB400;
+            --success: #4CD964;
+            --bg: #F8F9FA;
             --card: #FFFFFF;
-            --text: #333333;
-            --muted: #767676;
+            --text: #2D3748;
+            --muted: #A0AEC0;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-        body { background-color: var(--bg); color: var(--text); padding: 16px; padding-bottom: 40px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", sans-serif; }
+        body { background-color: var(--bg); color: var(--text); padding: 20px; padding-bottom: 60px; -webkit-font-smoothing: antialiased; }
+        
         .header { text-align: center; margin-bottom: 24px; padding-top: 10px; }
-        .logo { font-size: 28px; font-weight: 800; color: var(--primary); display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .tagline { font-size: 14px; color: var(--muted); margin-top: 4px; }
-        .badge { background: #EFFFFA; color: #00A699; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-top: 8px; }
-        .card { background: var(--card); border-radius: 16px; padding: 16px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        .card-title { font-size: 18px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-        .btn { background: var(--primary); color: white; border: none; width: 100%; padding: 14px; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; }
-        .btn-secondary { background: #EAEAEA; color: var(--text); }
-        .journal-item { border-left: 3px solid var(--primary); padding-left: 10px; margin: 10px 0; font-size: 15px; }
-        .score-box { background: #F0F9FF; border-left: 4px solid #007AFF; padding: 12px; border-radius: 8px; margin-top: 8px; }
-        .streak { background: linear-gradient(135deg, #FF9500, #FF5E3A); color: white; text-align: center; padding: 16px; border-radius: 16px; font-weight: bold; margin-bottom: 16px; }
-        .disclaimer { font-size: 11px; color: var(--muted); text-align: center; margin-top: 30px; line-height: 1.4; }
+        .logo { font-size: 32px; font-weight: 900; color: var(--primary); letter-spacing: -0.5px; }
+        .badge { background: #EFFFFA; color: #00A699; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase; margin-top: 6px; display: inline-block; }
+        
+        .card { background: var(--card); border-radius: 24px; padding: 20px; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.02); }
+        .card-title { font-size: 18px; font-weight: 800; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+        
+        .goal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+        .input-group { display: flex; flex-direction: column; gap: 4px; }
+        .input-group label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; }
+        .app-input { padding: 12px; border: 2px solid #EDF2F7; border-radius: 14px; font-size: 16px; font-weight: bold; outline: none; transition: 0.2s; }
+        .app-input:focus { border-color: var(--primary); }
+        .progress-box { background: linear-gradient(135deg, #FFF5F5, #FFE3E3); border-radius: 16px; padding: 16px; text-align: center; margin-top: 12px; }
+        .progress-text { font-size: 18px; font-weight: 800; color: var(--primary); }
+        .sub-progress { font-size: 13px; color: #718096; margin-top: 2px; }
+
+        .search-wrapper { display: flex; gap: 8px; margin-bottom: 12px; }
+        .search-bar { flex: 1; border-radius: 14px; }
+        .btn-action { background: var(--primary); color: white; border: none; padding: 0 20px; border-radius: 14px; font-weight: 700; font-size: 15px; cursor: pointer; }
+        
+        .camera-container { text-align: center; }
+        .camera-trigger { background: #EDF2F7; border: 2px dashed #CBD5E0; border-radius: 16px; padding: 30px 15px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px; font-weight: 700; color: #4A5568; transition: 0.2s; }
+        .camera-trigger:active { background: #E2E8F0; }
+        #lens-input { display: none; }
+        #lens-preview { width: 100%; border-radius: 16px; margin-top: 12px; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+        .log-list { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+        .log-item { background: #F7FAFC; padding: 14px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; animation: slideIn 0.3s ease; }
+        .log-name { font-weight: 700; font-size: 15px; }
+        .log-cal { background: #EDF2F7; padding: 4px 10px; border-radius: 10px; font-size: 13px; font-weight: 800; color: #4A5568; }
+        
+        .macro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; text-align: center; }
+        .macro-pill { background: #EDF2F7; padding: 10px; border-radius: 12px; font-size: 13px; font-weight: 700; }
+        .macro-pill span { display: block; font-size: 18px; font-weight: 800; color: var(--text); }
+
+        .streak-container { background: linear-gradient(135deg, #FF9500, #FF5E3A); color: white; padding: 20px; border-radius: 24px; text-align: center; position: relative; overflow: hidden; box-shadow: 0 10px 20px rgba(255,94,58,0.2); }
+        .streak-title { font-size: 22px; font-weight: 900; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .days-row { display: flex; justify-content: space-between; margin-top: 14px; padding: 0 10px; }
+        .day-bubble { width: 32px; height: 32px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; cursor: pointer; }
+        .day-bubble.active { background: #FFFFFF; color: #FF5E3A; box-shadow: 0 4px 10px rgba(0,0,0,0.1); font-size: 14px; }
+        
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <div class="logo">DailyBite 🍓</div>
-        <div class="tagline">Build better habits. Know your food.</div>
-        <div class="badge">FREE • NO ACCOUNT NEEDED</div>
+        <div class="logo">DailyBite ✨</div>
+        <div class="badge">Live Production Environment</div>
     </div>
 
+    <!-- 1. Interactive Goal Engine -->
     <div class="card">
-        <div class="card-title">📸 AI Meal Recognition</div>
-        <p style="color: var(--muted); font-size: 14px; margin-bottom: 12px;">Snap your meal, take a photo, or try the demo scan to instantly identify foods and estimate nutrition.</p>
-        <button class="btn">📷 Take Photo / Snap Meal</button>
-        <button class="btn btn-secondary" style="margin-top: 8px;">✨ Try Demo Scan (*Demo values only)</button>
-    </div>
-
-    <div class="card">
-        <div class="card-title">📝 Simple Food Journal</div>
-        <p style="font-weight: 600; font-size: 14px; color: var(--muted);">TODAY'S MEALS:</p>
-        <div class="journal-item">🥣 Greek yogurt + berries (Protein • Dairy)</div>
-        <div class="journal-item">🥗 Chicken veggie bowl (Vegetables • Protein • Grains)</div>
-        
-        <div class="score-box">
-            <p style="font-weight: bold; color: #007AFF;">Today's Balance Score: 82</p>
-            <p style="font-size: 13px; color: #555; margin-top: 2px;">Balanced-habit score based on variety and balance—not strict weight or calorie restriction.</p>
+        <div class="card-title">🎯 Your Weight Journey</div>
+        <div class="goal-grid">
+            <div class="input-group">
+                <label>Starting (lbs)</label>
+                <input type="number" id="start-w" class="app-input" value="180" oninput="calculateJourney()">
+            </div>
+            <div class="input-group">
+                <label>Target Goal (lbs)</label>
+                <input type="number" id="target-w" class="app-input" value="150" oninput="calculateJourney()">
+            </div>
         </div>
-        <button class="btn btn-secondary" style="margin-top: 12px;">+ Add Item to Journal</button>
+        <div class="input-group">
+            <label>Current Weight (lbs)</label>
+            <input type="number" id="current-w" class="app-input" value="172" oninput="calculateJourney()">
+        </div>
+        <div class="progress-box" id="progress-box">
+            <div class="progress-text" id="remaining-text">22 lbs until your goal!</div>
+            <div class="sub-progress" id="sub-text">You've successfully shed 8 lbs so far! Keep crushing it! 🔥</div>
+        </div>
     </div>
 
-    <div class="streak">
-        🔥 6-Day Habit Streak!
-        <div style="font-size: 12px; font-weight: normal; margin-top: 4px; opacity: 0.9;">M • T • W • T • F • S • S</div>
+    <!-- 2. Functional Camera Lens Viewport -->
+    <div class="card">
+        <div class="card-title">📸 Intelligent Vision Lens</div>
+        <div class="camera-container">
+            <label for="lens-input" class="camera-trigger" id="trigger-box">
+                <span style="font-size: 36px;">📷</span>
+                <span>Snap Your Meal</span>
+                <span style="font-size: 12px; font-weight: normal; color: var(--muted);">Uses native iPhone hardware camera pipeline</span>
+            </label>
+            <input type="file" id="lens-input" accept="image/*" capture="environment">
+            <img id="lens-preview" alt="Lens Viewport Capture">
+        </div>
     </div>
 
-    <div class="disclaimer">
-        DailyBite is a prototype. Nutrition information estimates depend on accuracy of input and should be checked against package labels when precision matters.
+    <!-- 3. Smart Search & Journal Pipeline -->
+    <div class="card">
+        <div class="card-title">🔍 Quick Search & Track</div>
+        <div class="search-wrapper">
+            <input type="text" id="search-bar" class="app-input search-bar" placeholder="Search food (try: Chicken, Apple, Pizza)">
+            <button class="btn-action" onclick="searchAndLog()">Add</button>
+        </div>
+        
+        <div class="macro-grid">
+            <div class="macro-pill">Logged Entries<span id="entry-count">2</span></div>
+            <div class="macro-pill">Est. Calories<span id="cal-count">540</span></div>
+        </div>
+
+        <div class="log-list" id="log-list">
+            <div class="log-item"><span class="log-name">🥣 Greek Yogurt Bowl</span><span class="log-cal">180 kcal</span></div>
+            <div class="log-item"><span class="log-name">🥗 Grilled Chicken Salad</span><span class="log-cal">360 kcal</span></div>
+        </div>
     </div>
 
-</body>
-</html>
+    <!-- 4. Interactive Habit Streak Track -->
+    <div class="card" style="padding: 0; border: none;">
+        <div class="streak-container">
+            <div class="streak-title">🔥 <span id="streak-count">6</span>-Day Streak!</div>
+            <div style="font-size: 13px; opacity: 0.9; margin-top: 2px;">Tap day markers to update check-ins live</div>
+            <div class="days-row">
+                <div class="day-bubble active" onclick="toggleStreak(this)">M</div>
+                <div class="day-bubble active" onclick="toggleStreak(this)">T</div>
+                <div class="day-bubble active" onclick="toggleStreak(this)">W</div>
+                <div class="day-bubble active" onclick="toggleStreak(this)">T</div>
+                <div class="day-bubble active" onclick="toggleStreak(this)">F</div>
+                <div class="day-bubble active" onclick="toggleStreak(this)">S</div>
+                <div class="day-bubble" onclick="toggleStreak(this)">S</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="font-size: 11px; color: var(--muted); text-align: center; margin-top: 24px; padding: 0 20px; line-height: 1.4;">
+        DailyBite is a sandbox prototype. Nutrition indices display dictionary data structures.
+    </div>
+
+    <script>
+        const foodDatabase = {
+            "chicken": 320, "apple": 95, "pizza": 285, "salad": 150, "banana": 105,
+            "rice": 200, "egg": 70, "salmon": 400, "burger": 550, "avocado": 160
+        };
+
+        let currentCalories = 540;
+        let activeEntries = 2;
+
+        function calculateJourney() {
+            const start = parseFloat(document.getElementById('start-w').value) || 0;
+            const target = parseFloat(document.getElementById('target-w').value) || 0;
+            const current = parseFloat(document.getElementById('current-w').value) || 0;
+            
+            const remaining = current - target;
+            const lost = start - current;
+            
+            const remainingText = document.getElementById('remaining-text');
+            const subText = document.getElementById('sub-text');
+            
+            if (remaining <= 0) {
