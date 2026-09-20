@@ -1,36 +1,69 @@
-DailyBite 🍓
-FREE • NO ACCOUNT NEEDED
-Know your food. Build better habits.
-DailyBite helps you understand what you're eating, keep a simple meal journal, and build balanced food habits.
-Snap your meal
-Take a photo or try the demo scan.
-📸
-🥗
-Meal recognition
-The full version can use AI to identify foods and packaged products from a photo.
-Try demo scan
-*Demo values only. Real nutrition estimates depend on the food, portion, recipe, and product label.
-Today's meals
-Your simple food journal.
-＋ Add
-🥣
-Greek yogurt + berries
-Fruit • protein • dairy
-🥗
-Chicken veggie bowl
-Vegetables • protein • grains
-Today's balance
-82
-Balanced-habit score
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DailyBite Prototype</title>
+    <style>
+        :root {
+            --primary: #FF5A5F;
+            --bg: #F7F7F7;
+            --card: #FFFFFF;
+            --text: #333333;
+            --muted: #767676;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: var(--bg); color: var(--text); padding: 16px; padding-bottom: 40px; }
+        .header { text-align: center; margin-bottom: 24px; padding-top: 10px; }
+        .logo { font-size: 28px; font-weight: 800; color: var(--primary); display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .tagline { font-size: 14px; color: var(--muted); margin-top: 4px; }
+        .badge { background: #EFFFFA; color: #00A699; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-top: 8px; }
+        .card { background: var(--card); border-radius: 16px; padding: 16px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .card-title { font-size: 18px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .btn { background: var(--primary); color: white; border: none; width: 100%; padding: 14px; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; }
+        .btn-secondary { background: #EAEAEA; color: var(--text); }
+        .journal-item { border-left: 3px solid var(--primary); padding-left: 10px; margin: 10px 0; font-size: 15px; }
+        .score-box { background: #F0F9FF; border-left: 4px solid #007AFF; padding: 12px; border-radius: 8px; margin-top: 8px; }
+        .streak { background: linear-gradient(135deg, #FF9500, #FF5E3A); color: white; text-align: center; padding: 16px; border-radius: 16px; font-weight: bold; margin-bottom: 16px; }
+        .disclaimer { font-size: 11px; color: var(--muted); text-align: center; margin-top: 30px; line-height: 1.4; }
+    </style>
+</head>
+<body>
 
-Based on meal variety and balanced habits — not weight or calorie restriction.
-🔥 6 day streak
-Build a consistent healthy-habit routine.
-MTWTFSS
-Today's variety
-✓ Fruit
-✓ Vegetables
-✓ Protein
-✓ Grains
-＋ Water
-DailyBite is a prototype. Nutrition information should be checked against the package label when accuracy matters.
+    <div class="header">
+        <div class="logo">DailyBite 🍓</div>
+        <div class="tagline">Build better habits. Know your food.</div>
+        <div class="badge">FREE • NO ACCOUNT NEEDED</div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">📸 AI Meal Recognition</div>
+        <p style="color: var(--muted); font-size: 14px; margin-bottom: 12px;">Snap your meal, take a photo, or try the demo scan to instantly identify foods and estimate nutrition.</p>
+        <button class="btn">📷 Take Photo / Snap Meal</button>
+        <button class="btn btn-secondary" style="margin-top: 8px;">✨ Try Demo Scan (*Demo values only)</button>
+    </div>
+
+    <div class="card">
+        <div class="card-title">📝 Simple Food Journal</div>
+        <p style="font-weight: 600; font-size: 14px; color: var(--muted);">TODAY'S MEALS:</p>
+        <div class="journal-item">🥣 Greek yogurt + berries (Protein • Dairy)</div>
+        <div class="journal-item">🥗 Chicken veggie bowl (Vegetables • Protein • Grains)</div>
+        
+        <div class="score-box">
+            <p style="font-weight: bold; color: #007AFF;">Today's Balance Score: 82</p>
+            <p style="font-size: 13px; color: #555; margin-top: 2px;">Balanced-habit score based on variety and balance—not strict weight or calorie restriction.</p>
+        </div>
+        <button class="btn btn-secondary" style="margin-top: 12px;">+ Add Item to Journal</button>
+    </div>
+
+    <div class="streak">
+        🔥 6-Day Habit Streak!
+        <div style="font-size: 12px; font-weight: normal; margin-top: 4px; opacity: 0.9;">M • T • W • T • F • S • S</div>
+    </div>
+
+    <div class="disclaimer">
+        DailyBite is a prototype. Nutrition information estimates depend on accuracy of input and should be checked against package labels when precision matters.
+    </div>
+
+</body>
+</html>
